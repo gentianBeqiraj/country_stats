@@ -2,12 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Country Search</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 60vh;
+        }
+        .form-container {
+            margin-top: 20px;
+        }
+        h1 {
+            font-size: 3.5rem;
+        }
+    </style>
 </head>
 <body>
-<h1>Search a country</h1>
-<form action="#" th:action="@{/cities}" th:object="${city}" method="get">
-    <input type="text" id="country" name="country" />
-    <button type="submit">Search</button>
-</form>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/" th:href="@{/}">Home</a>
+</nav>
+
+<div class="container">
+    <h1>Search a country</h1>
+
+    <div class="form-container">
+        <form action="#" th:action="@{/cities}" th:object="${city}" method="get" class="form-inline">
+            <label for="country" class="sr-only">Country</label>
+            <input type="text" id="country" name="country" class="form-control mb-2 mr-sm-2" placeholder="Enter country name" />
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
