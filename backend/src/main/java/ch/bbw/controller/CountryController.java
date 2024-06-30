@@ -28,9 +28,13 @@ public class CountryController {
   }
 
   @GetMapping
-  public String getCities(@RequestParam("country") String country, Model model) {
+  public String getCities(
+      @RequestParam("country") String country,
+      @RequestParam(value = "sortOrder", defaultValue = "nameAsc") String sortOrder,
+      Model model) {
+
     try {
-      List<CityResponse> filteredCities = cityService.getCitiesByCountry(country);
+      List<CityResponse> filteredCities = cityService.getCitiesByCountry(country, sortOrder);
       model.addAttribute("country", country);
       model.addAttribute("cities", filteredCities);
       return "country-stats";
