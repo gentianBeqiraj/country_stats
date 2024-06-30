@@ -26,9 +26,11 @@
     <div class="container">
         <h1>[[${country}]]</h1>
 
-        <form method="get" action="#" th:action="@{/cities}" class="form-inline mb-3">
-            <label for="sort" class="mr-2">Sort by:</label>
-            <select id="sort" name="sort" class="form-control mr-2">
+        <form action="#" th:action="@{/country-stats}" method="get" class="form-inline mb-3">
+            <input type="hidden" id="country" name="country" th:value="${country}">
+
+            <label for="sortOrder" class="mr-2">Sort by:</label>
+            <select id="sortOrder" name="sortOrder" class="form-control mr-2">
                 <option value="nameAsc">Name (A-Z)</option>
                 <option value="nameDesc">Name (Z-A)</option>
                 <option value="populationAsc">Population (Low to High)</option>
