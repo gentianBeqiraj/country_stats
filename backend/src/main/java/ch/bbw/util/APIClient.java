@@ -8,7 +8,7 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.Map;
 
-import ch.bbw.enums.RequestMethod;
+import ch.bbw.enums.Method;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class APIClient {
@@ -25,7 +25,7 @@ public class APIClient {
     this.objectMapper = new ObjectMapper();
   }
 
-  private HttpRequest buildRequest(RequestMethod method, String endpoint, Map<String, String> headers, String body, Duration timeout) {
+  private HttpRequest buildRequest(Method method, String endpoint, Map<String, String> headers, String body, Duration timeout) {
     HttpRequest.Builder builder = HttpRequest.newBuilder()
         .uri(URI.create(this.baseUrl + endpoint))
         .timeout(timeout);
@@ -76,25 +76,25 @@ public class APIClient {
 
   public <T> T get(String endpoint, Map<String, String> headers, Class<T> responseType, Duration timeout)
       throws IOException, InterruptedException {
-    HttpRequest request = buildRequest(RequestMethod.GET, endpoint, headers, null, timeout);
+    HttpRequest request = buildRequest(Method.GET, endpoint, headers, null, timeout);
     return sendRequest(request, responseType);
   }
 
   public <T> T post(String endpoint, Map<String, String> headers, String body, Class<T> responseType, Duration timeout)
       throws IOException, InterruptedException {
-    HttpRequest request = buildRequest(RequestMethod.POST, endpoint, headers, body, timeout);
+    HttpRequest request = buildRequest(Method.POST, endpoint, headers, body, timeout);
     return sendRequest(request, responseType);
   }
 
   public <T> T put(String endpoint, Map<String, String> headers, String body, Class<T> responseType, Duration timeout)
       throws IOException, InterruptedException {
-    HttpRequest request = buildRequest(RequestMethod.PUT, endpoint, headers, body, timeout);
+    HttpRequest request = buildRequest(Method.PUT, endpoint, headers, body, timeout);
     return sendRequest(request, responseType);
   }
 
   public <T> T delete(String endpoint, Map<String, String> headers, Class<T> responseType, Duration timeout)
       throws IOException, InterruptedException {
-    HttpRequest request = buildRequest(RequestMethod.DELETE, endpoint, headers, null, timeout);
+    HttpRequest request = buildRequest(Method.DELETE, endpoint, headers, null, timeout);
     return sendRequest(request, responseType);
   }
 
