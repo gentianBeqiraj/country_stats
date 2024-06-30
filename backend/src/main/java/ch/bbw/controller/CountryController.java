@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequestMapping("/cities")
-public class CityController {
+@RequestMapping("/country-stats")
+public class CountryController {
 
   private final CityService cityService;
 
   @Autowired
-  public CityController(CityService cityService) {
+  public CountryController(CityService cityService) {
     this.cityService = cityService;
   }
 
@@ -33,7 +33,7 @@ public class CityController {
       List<CityResponse> filteredCities = cityService.getCitiesByCountry(country);
       model.addAttribute("country", country);
       model.addAttribute("cities", filteredCities);
-      return "countries";
+      return "country-stats";
     } catch (Exception e) {
       model.addAttribute("error", "Unable to fetch cities at this time.");
       return "error";
