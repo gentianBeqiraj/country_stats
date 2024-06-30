@@ -3,7 +3,7 @@ package ch.bbw.enums;
 import lombok.Getter;
 
 @Getter
-public enum RequestMethod {
+public enum Method {
 
   GET("GET"),
   POST("POST"),
@@ -12,7 +12,7 @@ public enum RequestMethod {
 
   private final String value;
 
-  RequestMethod(String value) {
+  Method(String value) {
     this.value = value;
   }
 }
