@@ -23,8 +23,9 @@ public class CountryInfoService {
   public CountryInfoResponse getCountryInfo(String country)
       throws IOException, InterruptedException {
 
-    return (CountryInfoResponse) getApiResponse().getData().stream()
-        .filter(infoResponse -> country.equalsIgnoreCase(infoResponse.getName()));
+    return getApiResponse().getData().stream()
+        .filter(infoResponse -> country.equalsIgnoreCase(infoResponse.getName()))
+        .findFirst().orElse(null);
   }
 
   private ApiInfoResponse getApiResponse() throws IOException, InterruptedException {
