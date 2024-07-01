@@ -1,6 +1,6 @@
 package ch.bbw.service;
 
-import ch.bbw.dtos.ApiResponse;
+import ch.bbw.dtos.ApiInfoResponse;
 import ch.bbw.dtos.CountryInfoResponse;
 import ch.bbw.util.APIClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +27,13 @@ public class CountryInfoService {
         .filter(infoResponse -> country.equalsIgnoreCase(infoResponse.getName()));
   }
 
-  private ApiResponse<CountryInfoResponse> getApiResponse() throws IOException, InterruptedException {
+  private ApiInfoResponse getApiResponse() throws IOException, InterruptedException {
     final String endpoint = "countries/info?returns=currency,flag,dialCode,capital";
 
     Map<String, String> headers = new HashMap<>();
     headers.put("Content-Type", "application/json");
 
-    return apiClient.get(endpoint, headers, ApiResponse.class);
+    return apiClient.get(endpoint, headers, ApiInfoResponse.class);
   }
 }
 
