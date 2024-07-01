@@ -3,7 +3,7 @@ package ch.bbw.dtos;
 import lombok.Data;
 
 @Data
-public class InfoResponse {
+public class CountryInfoResponse {
 
   String name;
   String currency;
