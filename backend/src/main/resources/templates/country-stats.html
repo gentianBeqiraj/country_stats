@@ -13,6 +13,17 @@
         .container {
             margin-top: 4rem;
         }
+        .overview {
+            padding: 2rem 0;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 10px;
+        }
+        .info {
+            display: grid;
+            grid-template-columns: 1fr 5fr;
+            gap: 10px;
+        }
         .table-container {
             margin-top: 20px;
         }
@@ -25,6 +36,18 @@
 
     <div class="container">
         <h1>[[${country}]]</h1>
+
+        <div class="overview">
+            <div class="info">
+                <b>Capital:</b>
+                <p th:text="${countryInfo.capital}">Capital</p>
+                <b>Currency:</b>
+                <p th:text="${countryInfo.currency}">Capital</p>
+                <b>Dial Code:</b>
+                <p th:text="${countryInfo.dialCode}">Dial Code</p>
+            </div>
+            <img th:src="${countryInfo.flag}" th:alt="${country}" height="200"/>
+        </div>
 
         <form action="#" th:action="@{/country-stats}" method="get" class="form-inline mb-3">
             <input type="hidden" id="country" name="country" th:value="${country}">
