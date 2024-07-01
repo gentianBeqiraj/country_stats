@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class ApiResponse<T> {
+public class ApiCityResponse {
 
   Boolean error;
   String msg;
-  List<T> data = new ArrayList<>();
+  List<CityResponse> data = new ArrayList<>();
 }
