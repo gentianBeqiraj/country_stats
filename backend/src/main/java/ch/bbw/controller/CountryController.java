@@ -1,7 +1,9 @@
 package ch.bbw.controller;
 
 import ch.bbw.dtos.CityResponse;
+import ch.bbw.dtos.CountryInfoResponse;
 import ch.bbw.service.CityService;
+import ch.bbw.service.CountryInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +18,12 @@ import java.util.List;
 public class CountryController {
 
   private final CityService cityService;
+  private final CountryInfoService countryInfoService;
 
   @Autowired
-  public CountryController(CityService cityService) {
+  public CountryController(CityService cityService, CountryInfoService countryInfoService) {
     this.cityService = cityService;
+    this.countryInfoService = countryInfoService;
   }
 
   @GetMapping("/")
@@ -28,13 +32,15 @@ public class CountryController {
   }
 
   @GetMapping
-  public String getCities(
+  public String getCountryStats(
       @RequestParam("country") String country,
       @RequestParam(value = "sortOrder", defaultValue = "nameAsc") String sortOrder,
       Model model) {
 
     try {
+      CountryInfoResponse countryInfo = countryInfoService.getCountryInfo(country);
       List<CityResponse> filteredCities = cityService.getCitiesByCountry(country, sortOrder);
+      model.addAttribute("countryInfo", countryInfo);
       model.addAttribute("country", country);
       model.addAttribute("cities", filteredCities);
       return "country-stats";
