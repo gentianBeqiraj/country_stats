@@ -1,7 +1,7 @@
 package ch.bbw.service;
 
 import ch.bbw.dtos.CityResponse;
-import ch.bbw.dtos.ApiResponse;
+import ch.bbw.dtos.ApiCityResponse;
 import ch.bbw.util.APIClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,13 +54,13 @@ public class CityService {
     return cities;
   }
 
-  private ApiResponse getApiResponse() throws IOException, InterruptedException {
+  private ApiCityResponse getApiResponse() throws IOException, InterruptedException {
     final String endpoint = "countries/population/cities/";
 
     Map<String, String> headers = new HashMap<>();
     headers.put("Content-Type", "application/json");
 
-    return apiClient.get(endpoint, headers, ApiResponse.class);
+    return apiClient.get(endpoint, headers, ApiCityResponse.class);
   }
 }
 
