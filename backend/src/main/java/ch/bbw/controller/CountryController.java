@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+/**
+ * Controller for handling country statistics related requests.
+ */
 @Controller
 @RequestMapping("/country-stats")
 public class CountryController {
@@ -20,17 +23,36 @@ public class CountryController {
   private final CityService cityService;
   private final CountryInfoService countryInfoService;
 
+  /**
+   * Constructor for CountryController.
+   *
+   * @param cityService         the service for city-related operations
+   * @param countryInfoService  the service for country info-related operations
+   */
   @Autowired
   public CountryController(CityService cityService, CountryInfoService countryInfoService) {
     this.cityService = cityService;
     this.countryInfoService = countryInfoService;
   }
 
+  /**
+   * Handles the root request for the country-stats endpoint.
+   *
+   * @return the name of the index view
+   */
   @GetMapping("/")
   public String index() {
     return "index";
   }
 
+  /**
+   * Handles requests to fetch and display country statistics and cities.
+   *
+   * @param country   the name of the country
+   * @param sortOrder the sort order for the city list (default is nameAsc)
+   * @param model     the model to pass data to the view
+   * @return the name of the view to be rendered
+   */
   @GetMapping
   public String getCountryStats(
       @RequestParam("country") String country,
