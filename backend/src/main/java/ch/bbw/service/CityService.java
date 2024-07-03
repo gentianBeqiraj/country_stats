@@ -13,16 +13,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Service for handling city-related operations.
+ */
 @Service
 public class CityService {
 
   private final APIClient apiClient;
 
+  /**
+   * Constructor for CityService.
+   * Initializes the API client with a base URL and a timeout.
+   */
   @Autowired
   public CityService() {
     this.apiClient = new APIClient("https://countriesnow.space/api/v0.1", 10);
   }
 
+  /**
+   * Fetches and returns a list of cities for the specified country, sorted according to the given sort order.
+   *
+   * @param country   the name of the country
+   * @param sortOrder the sort order for the city list (nameAsc, nameDesc, populationAsc, populationDesc, yearAsc, yearDesc)
+   * @return a list of CityResponse objects
+   * @throws IOException          if an I/O error occurs
+   * @throws InterruptedException if the operation is interrupted
+   */
   public List<CityResponse> getCitiesByCountry(String country, String sortOrder)
       throws IOException, InterruptedException {
 
@@ -54,6 +70,13 @@ public class CityService {
     return cities;
   }
 
+  /**
+   * Fetches the API response containing city data.
+   *
+   * @return an ApiCityResponse object containing the city data
+   * @throws IOException          if an I/O error occurs
+   * @throws InterruptedException if the operation is interrupted
+   */
   private ApiCityResponse getApiResponse() throws IOException, InterruptedException {
     final String endpoint = "countries/population/cities/";
 
@@ -63,4 +86,3 @@ public class CityService {
     return apiClient.get(endpoint, headers, ApiCityResponse.class);
   }
 }
-
