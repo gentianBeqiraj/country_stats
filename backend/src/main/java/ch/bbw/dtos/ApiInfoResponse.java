@@ -1,14 +1,5 @@
 package ch.bbw.dtos;
 
-import lombok.Data;
+public class ApiInfoResponse extends ApiResponse<CountryInfoResponse> {
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Data
-public class ApiInfoResponse {
-
-  Boolean error;
-  String msg;
-  List<CountryInfoResponse> data = new ArrayList<>();
 }

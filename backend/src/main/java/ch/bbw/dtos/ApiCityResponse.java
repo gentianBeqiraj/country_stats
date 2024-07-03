@@ -1,14 +1,5 @@
 package ch.bbw.dtos;
 
-import lombok.Data;
+public class ApiCityResponse extends ApiResponse<CityResponse> {
 
-import java.util.ArrayList;
-import java.util.List;
-
-@Data
-public class ApiCityResponse {
-
-  Boolean error;
-  String msg;
-  List<CityResponse> data = new ArrayList<>();
 }
