@@ -3,14 +3,20 @@ package ch.bbw.service;
 import ch.bbw.dtos.CityResponse;
 import ch.bbw.dtos.ApiCityResponse;
 import ch.bbw.util.APIClient;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -70,6 +76,44 @@ public class CityService {
     return cities;
   }
 
+  public String getCityChart(List<CityResponse> cities) {
+    try {
+      Map<String, Long> cityPopulationMap = cities.stream()
+          .filter(cityResponse -> !cityResponse.getPopulationCounts().isEmpty())
+          .sorted((c1, c2) -> Long.compare(
+              c2.getPopulationCounts().getFirst().getValue(),
+              c1.getPopulationCounts().getFirst().getValue()))
+          .limit(5)
+          .collect(Collectors.toMap(
+              CityResponse::getCity,
+              cityResponse -> cityResponse.getPopulationCounts().getFirst().getValue()
+          ));
+
+      DefaultCategoryDataset dataset = createDataset(cityPopulationMap);
+
+      JFreeChart barChart = ChartFactory.createBarChart(
+          "Biggest Cities",
+          "Cities",
+          "Population count",
+          dataset,
+          PlotOrientation.VERTICAL,
+          false, true, false);
+
+      CategoryPlot plot = (CategoryPlot) barChart.getPlot();
+      BarRenderer renderer = (BarRenderer) plot.getRenderer();
+      renderer.setSeriesPaint(0, new java.awt.Color(79, 129, 189));
+
+      BufferedImage chartImage = barChart.createBufferedImage(800, 600);
+      ByteArrayOutputStream baos = new ByteArrayOutputStream();
+      ImageIO.write(chartImage, "png", baos);
+
+      return Base64.getEncoder().encodeToString(baos.toByteArray());
+    } catch (IOException e) {
+      System.out.println("Error while creating chart image:" + e);
+      return null;
+    }
+  }
+
   /**
    * Fetches the API response containing city data.
    *
@@ -84,5 +128,14 @@ public class CityService {
     headers.put("Content-Type", "application/json");
 
     return apiClient.get(endpoint, headers, ApiCityResponse.class);
+  }
+
+  private DefaultCategoryDataset createDataset(Map<String, Long> cityPopulationMap) {
+    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+    cityPopulationMap.forEach((city, population) ->
+        dataset.addValue(population, "Values", city));
+
+    return dataset;
   }
 }
