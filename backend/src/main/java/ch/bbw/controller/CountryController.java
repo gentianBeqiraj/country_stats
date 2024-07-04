@@ -62,9 +62,13 @@ public class CountryController {
     try {
       CountryInfoResponse countryInfo = countryInfoService.getCountryInfo(country);
       List<CityResponse> filteredCities = cityService.getCitiesByCountry(country, sortOrder);
+      String cityChart = cityService.getCityChart(filteredCities);
+
       model.addAttribute("countryInfo", countryInfo);
       model.addAttribute("country", country);
       model.addAttribute("cities", filteredCities);
+      model.addAttribute("cityChart", cityChart);
+
       return "country-stats";
     } catch (Exception e) {
       model.addAttribute("error", "Unable to fetch cities at this time.");
