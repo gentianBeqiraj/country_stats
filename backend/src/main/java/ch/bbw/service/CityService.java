@@ -76,6 +76,12 @@ public class CityService {
     return cities;
   }
 
+  /**
+   * Generates a bar chart image for the population of the given cities and returns it as a Base64 encoded string.
+   *
+   * @param cities the list of cities to include in the chart
+   * @return a Base64 encoded string of the chart image, or null if an error occurs
+   */
   public String getCityChart(List<CityResponse> cities) {
     try {
       Map<String, Long> cityPopulationMap = cities.stream()
@@ -130,6 +136,12 @@ public class CityService {
     return apiClient.get(endpoint, headers, ApiCityResponse.class);
   }
 
+  /**
+   * Creates a dataset for the bar chart from the given city population map.
+   *
+   * @param cityPopulationMap a map containing city names as keys and their population counts as values
+   * @return a DefaultCategoryDataset object for the bar chart
+   */
   private DefaultCategoryDataset createDataset(Map<String, Long> cityPopulationMap) {
     DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
